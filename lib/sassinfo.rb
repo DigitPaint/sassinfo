@@ -1,0 +1,3 @@
+# Sassinfo
+module Sassinfo
+end
