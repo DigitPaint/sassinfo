@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>toc</title>
+    <link rel="stylesheet" href="static/stylesheets/general.css" type="text/css" media="screen" title="no title" charset="utf-8">
+    <link href='https://fonts.googleapis.com/css?family=Lato:300,900' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+
+    <div id="wrapper">
+
+<style>
+  <% info.fonts.each do |name, font| %>
+    <%= font[:css] %>
+  <% end %>
+
+  <% info.mixins.each do |name, mixin| %>
+    <%= mixin[:css] %>
+  <% end %>
+</style>
+
+<h1>Styleguide</h1>
+
+<section>
+  <h2>Variables</h2>
+  <% variables = info.flatten_variables(info.variables()) %>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Value
+        </th>
+        <th>
+        </th>
+        <th>
+          Type
+        </th>
+        <th>
+          # Use
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% variables.each do |variable| %>
+        <tr class="var <%= "var--unused" if variable[:used] == 0 %>">
+          <td>
+            <span class="var__name">$<%= variable[:name] %></span>
+          </td>
+          <td>
+            <span class="var__code"><%= variable[:value] %><%= variable[:unit] %></span>
+          </td>
+          <td>
+            <% if variable[:type] == :color %>
+            <span class="var__preview" style="background: <%= variable[:value] %>"></span>
+            <% end %>
+          </td>
+          <td>
+            <%= variable[:type] %>
+          </td>
+          <td>
+            <%= variable[:used] %>
+          </td>
+        </tr>
+      <% end %>
+    <tbody>
+  </table>
+</section>
+
+
+<section>
+  <h2>Colors</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Color
+        </th>
+        <th>
+          Preview
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% info.colors.each do |color| %>
+        <tr class="var">
+          <td>
+            <span class="var__name"><%= color %></span>
+          </td>
+          <td>
+            <span class="var__preview" style="background: <%= color %>"></span>
+          </td>
+        </tr>
+      <% end %>
+    <tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Fonts</h2>
+  <p>All @font-face declarations.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Family
+        </th>
+        <th>
+          Weight
+        </th>
+        <th>
+          Preview
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% info.fonts.each do |name, font| %>
+        <tr class="var">
+          <td>
+            <span class="var__name"><%= font[:font_family] %></span>
+          </td>
+          <td>
+            <%= font[:font_weight] %>
+          </td>
+          <td>
+            <span style="font-family: <%= font[:font_family]%>; font-weight: <%= font[:font_weight] %>;">The quick brown fox jumps over the lazy frog.</span>
+          </td>
+        </tr>
+      <% end %>
+    <tbody>
+  </table>
+</section>
+
+
+<section>
+  <h2>Mixins</h2>
+  <p>All mixins in this Sass file.</p>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Parameters?
+        </th>
+        <th>
+          # Use
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% info.mixins.each do |name, mixin| %>
+        <tr class="var <%= "var--unused" if mixin[:used] == 0 %>">
+          <td>
+            <span class="var__name"><%= name %></span>
+          </td>
+          <td>
+            <%= "yes" if mixin[:has_params] %>
+          </td>
+          <td>
+            <%= mixin[:used] %>
+          </td>
+        </tr>
+      <% end %>
+    <tbody>
+  </table>
+</section>
+    </div>
+
+  </body>
+</html>
